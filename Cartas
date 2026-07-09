@@ -1,0 +1,124 @@
+<?php
+
+class Cartas
+{
+    // Adicionado o atributo para evitar avisos de propriedade dinâmica
+    private $carta1; 
+
+    private $cartas = [
+        1  => "Louco",
+        2  => "Mago",
+        3  => "Sacerdotisa",
+        4  => "Imperatriz",
+        5  => "Imperador",
+        6  => "Papa",
+        7  => "Enamorados",
+        8  => "Carro",
+        9  => "Justiça",
+        10 => "Eremita",
+        11 => "Roda da Fortuna",
+        12 => "Força",
+        13 => "Enforcado",
+        14 => "Morte",
+        15 => "Temperança",
+        16 => "Diabo",
+        17 => "Torre",
+        18 => "Estrela",
+        19 => "Lua",
+        20 => "Sol",
+        21 => "Julgamento",
+        22 => "Mundo"
+    ];
+
+    public function aleatorio()
+    {
+        return array_rand($this->cartas);
+    }
+
+    public function getCarta()
+    {
+        return $this->carta1;
+    }
+    
+    public function setCarta1($carta): self
+    {
+        // Corrigido de $carta1 para $carta
+        $this->carta1 = $carta; 
+
+        return $this;
+    }
+}
+
+$carta = new Cartas();
+
+do {
+    echo "\n-----------MENU PRINCIPAL-----------\n";
+    echo "1- Adivinhar \n";
+    echo "0- Sair\n";
+
+    $opcaoPrincipal = readline("Informe a opção: ");
+    echo "\n";
+
+    switch ($opcaoPrincipal) {
+        case 1:
+            system("clear");
+            do {
+                echo "\n-----------MENU DE CARTAS-----------\n";
+                echo "1- Louco\n";
+                echo "2- Mago\n";
+                echo "3- Sacerdotisa\n";
+                echo "4- Imperatriz\n";
+                echo "5- Imperador\n";
+                echo "6- Papa\n";
+                echo "7- Enamorados\n";
+                echo "8- Carro\n";
+                echo "9- Justiça\n";
+                echo "10- Eremita\n";
+                echo "11- Roda da Fortuna\n";
+                echo "12- Força\n";
+                echo "13- Enforcado\n";
+                echo "14- Morte\n";
+                echo "15- Temperança\n";
+                echo "16- Diabo\n";
+                echo "17- Torre\n";
+                echo "18- Estrela\n";
+                echo "19- Lua\n";
+                echo "20- Sol\n";
+                echo "21- Julgamento\n";
+                echo "22- Mundo\n";
+                echo "23- Dicas\n";
+                echo "0- Voltar ao Menu Principal\n"; // Adicionado para o usuário conseguir sair do sub-menu
+                
+                $opcaoCartas = readline("Informe a opção: ");
+                echo "\n";
+
+                if ($opcaoCartas >= 1 && $opcaoCartas <= 23) {
+                    system("clear");
+                    // Sorteia uma carta para a rodada atual
+                    $cartaSorteada = $carta->aleatorio(); 
+                    
+                    if ($opcaoCartas == $cartaSorteada) {
+                        print "Você acertou!!!\n";
+                    } else {
+                        print "Você errou! A carta era: " . $opcaoCartas . " (tente novamente!)\n";
+                    }
+                } elseif ($opcaoCartas == 0) {
+                    system("clear");
+                    echo "Voltando ao menu principal...\n";
+                } else {
+                    echo "Opção inválida!\n";
+                }
+
+            } while ($opcaoCartas != 0); // <-- Faltava fechar este DO-WHILE aqui!
+            break;
+
+        case 0:
+            system("clear");
+            echo "Programa encerrado!\n";
+            break;
+
+        default:
+            echo "Opção Inválida!\n";
+            break;
+    }
+} while ($opcaoPrincipal != 0);
