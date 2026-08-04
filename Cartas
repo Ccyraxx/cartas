@@ -2,9 +2,6 @@
 
 class Cartas
 {
-    // Adicionado o atributo para evitar avisos de propriedade dinâmica
-    private $carta1; 
-
     private $cartas = [
         1  => "Louco",
         2  => "Mago",
@@ -35,15 +32,50 @@ class Cartas
         return array_rand($this->cartas);
     }
 
-    public function getCarta()
+    public function dicas($cartaSorteada) 
     {
-        return $this->carta1;
+        $dicas = [
+            1  => "Representa novos começos, liberdade, espontaneidade e um salto de fé.",
+            2  => "Representa habilidade, foco, manifestação e ter os recursos necessários nas mãos.",
+            3  => "Representa intuição, mistério, sabedoria interior e o inconsciente.",
+            4  => "Representa fertilidade, abundância, natureza e o cuidado materno.",
+            5  => "Representa autoridade, estrutura, controle e poder de liderança.",
+            6  => "Representa tradição, espiritualidade, ensinamentos e regras morais.",
+            7  => "Representa escolhas, união, relacionamentos e alinhamento de valores.",
+            8  => "Representa determinação, controle, vitória e avanço rápido.",
+            9  => "Representa equilíbrio, verdade, causa e efeito e decisões fair-play.",
+            10 => "Representa introspecção, busca por respostas, prudência e solidão reflexiva.",
+            11 => "Representa ciclos, destino, altos e baixos e mudanças inevitáveis.",
+            12 => "Representa coragem, paciência, autocontrole e força interior (não física).",
+            13 => "Representa pausa, mudança de perspectiva, entrega e ver as coisas por outro ângulo.",
+            14 => "Representa encerramentos, transformação profunda e novos ciclos (não significa morte física!).",
+            15 => "Representa moderação, equilíbrio, harmonia e paciência.",
+            16 => "Representa tentação, apegos, ilusões e vícios.",
+            17 => "Representa destruição de falsas estruturas, revelação súbita e mudanças imprevisíveis.",
+            18 => "Representa esperança, inspiração, fé e renovação espiritual.",
+            19 => "Representa ilusão, medo, incerteza e coisas escondidas na sombra.",
+            20 => "Representa clareza, sucesso, vitalidade, alegria e iluminação.",
+            21 => "Representa despertar, avaliação, chamado da vida e perdão.",
+            22 => "Representa realização, conclusão de um ciclo, integração e sucesso total."
+        ];
+
+        echo "\n💡 DICA DA CARTA:\n";
+
+        if (isset($dicas[$cartaSorteada])) {
+            echo "-> " . $dicas[$cartaSorteada] . "\n\n";
+        } else {
+            echo "-> Nenhuma dica disponível para esta carta.\n\n";
+        }
     }
-    
-    public function setCarta1($carta): self
+
+    public function getCartas()
     {
-        // Corrigido de $carta1 para $carta
-        $this->carta1 = $carta; 
+        return $this->cartas;
+    }
+
+    public function setCartas($cartas): self
+    {
+        $this->cartas = $cartas;
 
         return $this;
     }
@@ -61,6 +93,7 @@ do {
 
     switch ($opcaoPrincipal) {
         case 1:
+            $cartaSorteada = $carta->aleatorio(); 
             system("clear");
             do {
                 echo "\n-----------MENU DE CARTAS-----------\n";
@@ -87,29 +120,31 @@ do {
                 echo "21- Julgamento\n";
                 echo "22- Mundo\n";
                 echo "23- Dicas\n";
-                echo "0- Voltar ao Menu Principal\n"; // Adicionado para o usuário conseguir sair do sub-menu
-                
+                echo "0- Voltar ao Menu Principal\n";
+
                 $opcaoCartas = readline("Informe a opção: ");
                 echo "\n";
 
-                if ($opcaoCartas >= 1 && $opcaoCartas <= 23) {
+                if ($opcaoCartas >= 1 && $opcaoCartas <= 22) {
                     system("clear");
-                    // Sorteia uma carta para a rodada atual
-                    $cartaSorteada = $carta->aleatorio(); 
                     
                     if ($opcaoCartas == $cartaSorteada) {
                         print "Você acertou!!!\n";
+                        $cartaSorteada = $carta->aleatorio();
                     } else {
                         print "Você errou! A carta era: " . $opcaoCartas . " (tente novamente!)\n";
                     }
                 } elseif ($opcaoCartas == 0) {
                     system("clear");
                     echo "Voltando ao menu principal...\n";
+                } elseif ($opcaoCartas == 23) {
+                    system("clear");
+                    $carta->dicas($cartaSorteada);
                 } else {
                     echo "Opção inválida!\n";
                 }
 
-            } while ($opcaoCartas != 0); // <-- Faltava fechar este DO-WHILE aqui!
+            } while ($opcaoCartas != 0);
             break;
 
         case 0:
@@ -121,4 +156,5 @@ do {
             echo "Opção Inválida!\n";
             break;
     }
+
 } while ($opcaoPrincipal != 0);
